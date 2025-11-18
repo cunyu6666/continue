@@ -25,6 +25,7 @@ jobs:
             docs:
               - 'docs/**'
             non-docs:
+              - '**'
               - '!docs/**'
       - name: Check if only docs changed
         id: check-changes
