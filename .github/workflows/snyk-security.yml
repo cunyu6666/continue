@@ -1,0 +1,48 @@
+name: Snyk Security Scan
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  schedule:
+    # Run weekly on Mondays at 00:00 UTC
+    - cron: '0 0 * * 1'
+
+jobs:
+  snyk-scan:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        directory: [frontend, backend]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: ./${{ matrix.directory }}
+        run: npm ci
+
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high --project-name=24-7-store-${{ matrix.directory }}
+          command: test
+          working-directory: ./${{ matrix.directory }}
+
+      - name: Run Snyk to monitor project
+        uses: snyk/actions/node@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: monitor
+          args: --project-name=24-7-store-${{ matrix.directory }}
+          working-directory: ./${{ matrix.directory }}

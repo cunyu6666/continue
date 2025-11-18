@@ -1,0 +1,14 @@
+# Snyk (https://snyk.io) policy file
+# Configuration for vulnerability scanning
+
+# Ignore specific vulnerabilities (examples)
+ignore: {}
+
+# Patch configuration
+patch: {}
+
+# Language settings
+language-settings:
+  javascript:
+    # Ignore devDependencies in production
+    ignore-dev-deps: true

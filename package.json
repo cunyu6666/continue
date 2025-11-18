@@ -1,0 +1,28 @@
+{
+  "name": "24-7-store",
+  "version": "1.0.0",
+  "description": "E-commerce web application for a convenience store",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "build:frontend": "cd frontend && npm run build",
+    "build:backend": "cd backend && npm run build",
+    "build": "npm run build:frontend && npm run build:backend"
+  },
+  "keywords": [
+    "ecommerce",
+    "convenience-store",
+    "react",
+    "express",
+    "supabase",
+    "sanity"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
