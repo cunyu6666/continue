@@ -11,10 +11,20 @@ _`CodebaseIndex`_: a class that makes it easy to use the indexing system to help
 The indexing process does the following:
 
 1. Check the modified timestamps of all files in the repo (this may seem extreme, but checking timestamps is significantly faster than actually reading a file. Git does the same thing.)
-2. Compare these to a "catalog" (stored in SQLite) of the last time that we indexed each of these files to get a list of files to "add" or "remove". If the file exists in the repo but not in the catalog, then we must "add" the file. If it exists in the catalog but not the repo, we must "remove" the file. If it exists in both and was modified after last indexed, then we must update the file. In this case we also add it to the "add" list.
-3. For each file to "add", check whether it was indexed on another branch. Here we use a SQLite table that acts as a cache for indexed files. If we find an entry in this table for a file with the same cacheKey, then we only need to add a tag to this entry for the current branch ("addTag"). Otherwise, we must "compute" the artifact.
-4. For each file in "remove", check whether it was indexed on another branch. If we find only one entry with the same cacheKey (presumably this should be the entry for the current branch, or something has gone wrong), then this entry should be removed and there will be no more branches that need the artifact, so we want to "delete" it. If there is more than one tag on this artifact, then we should just remove the tag for this branch ("removeTag").
-5. After having calculated these four lists of files ("compute", "delete", "addTag", "removeTag"), we pass them to the `CodebaseIndex` so that it can update whatever index-specific storage it might have. Many of them use SQLite and/or LanceDB. The `CodebaseIndex` implements a method called "update" that accepts the four lists and yields progress updates as it iterates over the lists. These progress updates are used to officially mark a file as having been indexed, so that if the extension is closed mid-indexing we don't falsely record progress.
+2. Compare these to a "catalog" (stored in SQLite) of the last time that we indexed each of these files to get a list of files to "add" or "remove". If the file exists in the repo but not in the catalog, then we must "add" the file. If it exists in the catalog but not the repo, we must "remove" the file. If it exists in both and was modified after last indexed, then we must update the file. In this case we check the cacheKey (content hash) to determine if the file content actually changed.
+3. For files that were modified:
+   - If the cacheKey changed, the file goes into "updateNewVersion" for re-indexing
+   - If the cacheKey is the same, the file goes into "updateLastUpdated" to only update the timestamp (avoiding unnecessary re-computation)
+4. For each file to "add", check whether it was indexed on another branch. Here we use a SQLite table that acts as a cache for indexed files. If we find an entry in this table for a file with the same cacheKey, then we only need to add a tag to this entry for the current branch ("addTag"). Otherwise, we must "compute" the artifact.
+5. For each file in "remove", check whether it was indexed on another branch. If we find only one entry with the same cacheKey (presumably this should be the entry for the current branch, or something has gone wrong), then this entry should be removed and there will be no more branches that need the artifact, so we want to "delete" it. If there is more than one tag on this artifact, then we should just remove the tag for this branch ("removeTag").
+6. After having calculated these lists of operations ("compute", "delete", "addTag", "removeTag", "updateLastUpdated"), we pass them to the `CodebaseIndex` so that it can update whatever index-specific storage it might have. Many of them use SQLite and/or LanceDB. The `CodebaseIndex` implements a method called "update" that yields progress updates as it processes these operations. These progress updates are used to officially mark a file as having been indexed, so that if the extension is closed mid-indexing we don't falsely record progress.
+
+## SQLite Schema
+
+The indexing system maintains two SQLite tables with unique constraints to prevent duplicate entries:
+
+- `tag_catalog`: Tracks indexed files per tag (directory, branch, artifactId) with a unique constraint on `(dir, branch, artifactId, path, cacheKey)`
+- `global_cache`: Tracks which cacheKeys exist across all tags with a unique constraint on `(cacheKey, dir, branch, artifactId)`
 
 ## Existing `CodebaseIndex`es
 
