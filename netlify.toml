@@ -11,6 +11,43 @@
   VITE_PUBLIC_POSTHOG_HOST = "https://us.i.posthog.com"
   SANITY_AUTH_TOKEN = "skqJ81e3Bn0JUsTkJISnIwkokQo5aFQI6FI1NcaPWzsKCI7RggjN75TBXpEx3XhXmasjwrvlnZfgD0vBiC20uDzS80cNOzuEb7xpzuYNRs91Tn5PPjrgfyobaEyiV3ThUKjItRZ28hDDMCu66k0BvVJyMz7L0uRzbjXJwQF4UTK32rAISMvC"
 
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/assets/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/svg/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/png/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/jpg/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
 [[redirects]]
   from = "/studio/*"
   to = "/studio/index.html"
