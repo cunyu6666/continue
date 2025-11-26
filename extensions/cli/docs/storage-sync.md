@@ -10,6 +10,7 @@ This document captures the responsibilities for both the CLI and backend compone
 
 - **Flag plumbing**: When `cn serve` is invoked with `--id <storageId>`, the CLI treats that value as an opaque identifier.
 - **API key auth**: The CLI attaches the user-level Continue API key (same mechanism we already use for other authenticated requests) to backend calls.
+- **Error reporting**: When running with `--id`, unhandled errors (promise rejections or uncaught exceptions) are reported to `POST agents/{id}/status` with `{ "status": "FAILED", "errorMessage": "..." }`. Reporting failures are logged but non-blocking.
 - **Presign handshake**:
   1. On startup, issue `POST https://api.continue.dev/agents/storage/presigned-url` with JSON payload `{ "storageId": "<storageId>" }`.
   2. Expect a response payload containing two pre-signed `PUT` URLs and their target object keys:
