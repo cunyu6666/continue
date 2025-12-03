@@ -99,12 +99,38 @@ Sends a message and waits for it to be processed:
 await sendMessage(ctx, "Hello world");
 ```
 
+### `waitForCondition(conditionFn, timeout?, interval?)`
+
+Waits for a condition to become true, polling at regular intervals:
+
+```typescript
+// Wait for text to appear in the frame
+await waitForCondition(() => lastFrame()?.includes("Expected text") ?? false);
+
+// With custom timeout and interval
+await waitForCondition(
+  () => someCondition === true,
+  5000, // timeout in ms
+  100, // polling interval in ms
+);
+```
+
 ### `waitForServerState(server, predicate, timeout?)`
 
 Waits for server state to match a condition (remote mode only):
 
 ```typescript
 await waitForServerState(server, (state) => state.messages.length > 0, 5000);
+```
+
+### `waitForNextRender()`
+
+Waits for the next render cycle to complete:
+
+```typescript
+stdin.write("some input");
+await waitForNextRender();
+const frame = lastFrame();
 ```
 
 ### `expectRemoteMode(frame)` / `expectNormalMode(frame)`
@@ -158,7 +184,7 @@ npm test -- --coverage
 1. **Write mode-agnostic tests by default** - Most functionality should work the same in both modes
 2. **Use helper functions** - They handle mode-specific details automatically
 3. **Test server state in remote mode** - Verify both UI and server state for comprehensive coverage
-4. **Handle async operations properly** - Use appropriate wait times and state checks
+4. **Handle async operations properly** - Use `waitForCondition()` instead of fixed timeouts for more reliable tests
 5. **Clean up resources** - The framework handles server lifecycle automatically
 
 ## Debugging
