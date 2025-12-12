@@ -274,7 +274,7 @@ export class OpenAIApi implements BaseLlmApi {
     let lastChunkWithUsage: ChatCompletionChunk | undefined;
     for await (const result of response) {
       // Check if this chunk contains usage information
-      if (result.usage && result.finish_reason === "stop") {
+      if (result.usage && result.choices?.[0]?.finish_reason === "stop") {
         // Store it to emit after all content chunks
         lastChunkWithUsage = result;
       } else {
