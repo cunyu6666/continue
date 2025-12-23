@@ -168,6 +168,5 @@ export async function gracefulExit(code: number = 0): Promise<void> {
   // exit with 1 instead to signal failure
   const finalCode = code === 0 && hadUnhandledError() ? 1 : code;
 
-  // Exit the process
   process.exit(finalCode);
 }
