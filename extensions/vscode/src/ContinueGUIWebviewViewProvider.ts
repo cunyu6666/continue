@@ -22,13 +22,20 @@ export class ContinueGUIWebviewViewProvider
     _context: vscode.WebviewViewResolveContext,
     _token: vscode.CancellationToken,
   ): void | Thenable<void> {
-    this.webviewProtocol.webview = webviewView.webview;
-    this._webviewView = webviewView;
-    this._webview = webviewView.webview;
-    webviewView.webview.html = this.getSidebarContent(
-      this.extensionContext,
-      webviewView,
-    );
+    try {
+      this.webviewProtocol.webview = webviewView.webview;
+      this._webviewView = webviewView;
+      this._webview = webviewView.webview;
+      webviewView.webview.html = this.getSidebarContent(
+        this.extensionContext,
+        webviewView,
+      );
+    } catch (error) {
+      console.error("Error in resolveWebviewView:", error);
+      vscode.window.showErrorMessage(
+        `Failed to load Qoder Chat view: ${error}`,
+      );
+    }
   }
 
   private _webview?: vscode.Webview;

@@ -1,0 +1,124 @@
+/**
+ * Qoder Chat Theme - 基于 Qoder Dark 主题的 CSS 变量定义
+ * 这些变量用于统一 Qoder Chat 界面与 Qoder IDE 的视觉风格
+ */
+
+:root {
+  /* 背景色 */
+  --qoder-bg-primary: #171716;
+  --qoder-bg-secondary: #1a1917;
+  --qoder-bg-tertiary: #22221f;
+  --qoder-bg-input: #31312d;
+  --qoder-bg-dropdown: #292926;
+  --qoder-bg-focus: #131311;
+
+  /* 前景色 / 文字颜色 */
+  --qoder-fg-primary: #eeeeeb;
+  --qoder-fg-secondary: #b4b4ad;
+  --qoder-fg-muted: #7b7b75;
+  --qoder-fg-editor: #ffffff;
+
+  /* 强调色 */
+  --qoder-accent: #2adb5c;
+  --qoder-accent-hover: #174a21;
+
+  /* 边框色 */
+  --qoder-border-primary: #2a2926;
+  --qoder-border-secondary: #484843;
+
+  /* 语义色 */
+  --qoder-error: #ec5b56;
+  --qoder-error-bg: #270d09;
+  --qoder-warning: #efb041;
+  --qoder-info: #2adb5c;
+  --qoder-success: #73b78e;
+  --qoder-link: #6ad86c;
+
+  /* 代码块颜色 */
+  --qoder-code-bg: var(--qoder-bg-secondary);
+  --qoder-code-border: var(--qoder-border-primary);
+  --qoder-code-string: #98c379;
+  --qoder-code-keyword: #c678dd;
+  --qoder-code-function: #61afef;
+  --qoder-code-type: #e5c07b;
+  --qoder-code-number: #d19a66;
+  --qoder-code-comment: #5c6370;
+  --qoder-code-variable: #abb2bf;
+  --qoder-code-tag: #e06c75;
+
+  /* 过渡效果 */
+  --qoder-transition-fast: 150ms ease;
+  --qoder-transition-normal: 250ms ease;
+
+  /* 圆角 */
+  --qoder-radius-sm: 4px;
+  --qoder-radius-md: 6px;
+  --qoder-radius-lg: 8px;
+}
+
+/* 覆盖 VS Code 主题变量以匹配 Qoder Dark */
+body {
+  --vscode-editor-background: var(--qoder-bg-secondary);
+  --vscode-editor-foreground: var(--qoder-fg-editor);
+  --vscode-sideBar-background: var(--qoder-bg-primary);
+  --vscode-sideBar-foreground: var(--qoder-fg-secondary);
+  --vscode-input-background: var(--qoder-bg-input);
+  --vscode-input-border: var(--qoder-border-primary);
+  --vscode-button-background: var(--qoder-accent);
+  --vscode-button-foreground: var(--qoder-bg-primary);
+  --vscode-focusBorder: transparent;
+  --vscode-list-activeSelectionBackground: var(--qoder-bg-tertiary);
+  --vscode-list-hoverBackground: var(--qoder-bg-tertiary);
+  --vscode-list-focusBackground: var(--qoder-bg-focus);
+}
+
+/* 链接样式 */
+a {
+  color: var(--qoder-link);
+  text-decoration: none;
+  transition: color var(--qoder-transition-fast);
+}
+
+a:hover {
+  color: var(--qoder-accent);
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--qoder-border-primary);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--qoder-border-secondary);
+}
+
+/* 选中文本样式 */
+::selection {
+  background-color: var(--qoder-accent);
+  color: var(--qoder-bg-primary);
+}
+
+/* 代码块样式覆盖 */
+pre {
+  background-color: var(--qoder-code-bg) !important;
+  border: 1px solid var(--qoder-code-border) !important;
+  border-radius: var(--qoder-radius-md) !important;
+}
+
+code:not(pre > code) {
+  background-color: var(--qoder-code-bg) !important;
+  border: 1px solid var(--qoder-code-border) !important;
+  border-radius: var(--qoder-radius-sm) !important;
+  padding: 2px 6px !important;
+  color: var(--qoder-code-string) !important;
+}

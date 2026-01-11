@@ -1,0 +1,272 @@
+/**
+ * Qoder Chat Code Block Styles
+ * 覆盖默认的代码块样式以匹配 Qoder Dark 主题
+ */
+
+/* Qoder Dark 主题代码块配色 */
+:root {
+  /* 代码块背景和边框 */
+  --qoder-code-bg: #1a1917;
+  --qoder-code-border: #2a2926;
+
+  /* 语法高亮颜色 - 匹配 Qoder Dark 主题 */
+  --qoder-syntax-comment: #5c6370;
+  --qoder-syntax-string: #98c379;
+  --qoder-syntax-keyword: #c678dd;
+  --qoder-syntax-function: #61afef;
+  --qoder-syntax-type: #e5c07b;
+  --qoder-syntax-number: #d19a66;
+  --qoder-syntax-variable: #abb2bf;
+  --qoder-syntax-tag: #e06c75;
+  --qoder-syntax-constant: #56b6c2;
+  --qoder-syntax-operator: #abb2bf;
+}
+
+/* 代码块容器样式 */
+pre {
+  background-color: var(--qoder-code-bg) !important;
+  border: 1px solid var(--qoder-code-border) !important;
+  border-radius: 6px !important;
+  margin: 8px 0 !important;
+  padding: 12px !important;
+  overflow-x: auto;
+}
+
+/* 内联代码样式 */
+code:not(pre > code) {
+  background-color: var(--qoder-code-bg) !important;
+  border: 1px solid var(--qoder-code-border) !important;
+  border-radius: 4px !important;
+  padding: 2px 6px !important;
+  font-family:
+    var(--vscode-editor-font-family), "JetBrains Mono", monospace !important;
+  font-size: 0.9em !important;
+  color: var(--qoder-syntax-string) !important;
+}
+
+/* 代码块内的代码样式 */
+pre code {
+  background-color: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  font-family:
+    var(--vscode-editor-font-family), "JetBrains Mono", monospace !important;
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+  color: var(--qoder-syntax-variable) !important;
+}
+
+/* 语法高亮 - 注释 */
+.hljs-comment,
+.hljs-quote,
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: var(--qoder-syntax-comment) !important;
+  font-style: italic;
+}
+
+/* 语法高亮 - 字符串 */
+.hljs-string,
+.hljs-addition,
+.token.string,
+.token.char,
+.token.attr-value,
+.token.inserted {
+  color: var(--qoder-syntax-string) !important;
+}
+
+/* 语法高亮 - 关键字 */
+.hljs-keyword,
+.hljs-selector-tag,
+.token.keyword,
+.token.rule,
+.token.important {
+  color: var(--qoder-syntax-keyword) !important;
+}
+
+/* 语法高亮 - 函数 */
+.hljs-title,
+.hljs-section,
+.hljs-name,
+.token.function,
+.token.class-name {
+  color: var(--qoder-syntax-function) !important;
+}
+
+/* 语法高亮 - 类型 */
+.hljs-type,
+.hljs-class .hljs-title,
+.token.type,
+.token.builtin {
+  color: var(--qoder-syntax-type) !important;
+}
+
+/* 语法高亮 - 数字 */
+.hljs-number,
+.hljs-literal,
+.token.number,
+.token.constant,
+.token.boolean {
+  color: var(--qoder-syntax-number) !important;
+}
+
+/* 语法高亮 - 变量 */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-attr,
+.token.variable,
+.token.property {
+  color: var(--qoder-syntax-variable) !important;
+}
+
+/* 语法高亮 - 标签 */
+.hljs-tag,
+.hljs-deletion,
+.token.tag,
+.token.selector,
+.token.deleted {
+  color: var(--qoder-syntax-tag) !important;
+}
+
+/* 语法高亮 - 内置常量 */
+.hljs-built_in,
+.hljs-builtin-name,
+.token.entity,
+.token.url {
+  color: var(--qoder-syntax-constant) !important;
+}
+
+/* 语法高亮 - 运算符 */
+.hljs-operator,
+.hljs-punctuation,
+.token.operator,
+.token.punctuation {
+  color: var(--qoder-syntax-operator) !important;
+}
+
+/* 语法高亮 - 正则表达式 */
+.hljs-regexp,
+.token.regex {
+  color: var(--qoder-syntax-tag) !important;
+}
+
+/* 语法高亮 - 属性名 */
+.hljs-attribute,
+.token.attr-name {
+  color: var(--qoder-syntax-number) !important;
+}
+
+/* 代码块工具栏样式 */
+.step-container-pre-toolbar {
+  background-color: var(--qoder-code-bg);
+  border: 1px solid var(--qoder-code-border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.step-container-pre-toolbar pre {
+  border: none !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+}
+
+/* 代码块头部样式 */
+.code-block-header {
+  background-color: #22221f;
+  border-bottom: 1px solid var(--qoder-code-border);
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.code-block-header .language-label {
+  color: #7b7b75;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.code-block-header .file-path {
+  color: #b4b4ad;
+  font-size: 12px;
+}
+
+/* 代码块操作按钮 */
+.code-block-actions button {
+  background-color: transparent;
+  border: none;
+  color: #7b7b75;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.code-block-actions button:hover {
+  background-color: #2a2926;
+  color: #eeeeeb;
+}
+
+/* 应用/复制按钮特殊样式 */
+.code-block-actions .apply-button {
+  background-color: #2adb5c;
+  color: #171716;
+}
+
+.code-block-actions .apply-button:hover {
+  background-color: #6ad86c;
+}
+
+/* 行号样式 */
+.line-number {
+  color: #484843;
+  padding-right: 12px;
+  text-align: right;
+  user-select: none;
+  min-width: 2em;
+}
+
+/* 高亮行样式 */
+.highlight-line {
+  background-color: rgba(42, 219, 92, 0.1) !important;
+  border-left: 2px solid #2adb5c;
+  margin-left: -2px;
+}
+
+/* 差异显示样式 */
+.diff-added {
+  background-color: rgba(115, 183, 142, 0.15);
+  border-left: 2px solid #73b78e;
+}
+
+.diff-removed {
+  background-color: rgba(236, 91, 86, 0.15);
+  border-left: 2px solid #ec5b56;
+}
+
+/* 选中代码样式 */
+pre code::selection,
+pre code *::selection {
+  background-color: rgba(42, 219, 92, 0.3);
+}
+
+/* 滚动条样式 */
+pre::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+pre::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+pre::-webkit-scrollbar-thumb {
+  background-color: #2a2926;
+  border-radius: 3px;
+}
+
+pre::-webkit-scrollbar-thumb:hover {
+  background-color: #484843;
+}
